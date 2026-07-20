@@ -39,7 +39,7 @@ function ProductPage() {
   const [selectedImage, setSelectedImage] =
     useState(null);
 
-  const product = getProductBySlug(slug);
+  const product = getProductBySlug(slug) || null;
 
   const productGalleryImages = useMemo(() => {
     if (!product) {
@@ -91,7 +91,7 @@ useEffect(() => {
 
   updateProductState();
 
-}, [product.id, productGalleryImages]);
+}, [product?.id, productGalleryImages]);
 
   if (productsLoading) {
     return (
