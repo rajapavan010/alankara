@@ -104,7 +104,11 @@ function App() {
 </Route>
 <Route
   path="*"
-  element={<HomePage />}
+  element={
+    <div>
+      Page Not Found
+    </div>
+  }
 />
         </Routes>
       </CartProvider>
