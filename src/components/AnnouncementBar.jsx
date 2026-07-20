@@ -9,9 +9,10 @@ import supabase from "../lib/supabase";
 
 function AnnouncementBar() {
 
-  const [message, setMessage] = useState(
-    "✨ FREE SHIPPING ON ORDERS ABOVE ₹999 ✨"
-  );
+  const [message, setMessage] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
 
 
   useEffect(() => {
@@ -41,12 +42,26 @@ function AnnouncementBar() {
           error
         );
 
+
+        // fallback only if Supabase fails
+
+        setMessage(
+          "✨ FREE SHIPPING ON ORDERS ABOVE ₹999 ✨"
+        );
+
+
+      } finally {
+
+        setLoading(false);
+
       }
 
     }
 
 
+
     loadAnnouncement();
+
 
 
 
@@ -58,16 +73,15 @@ function AnnouncementBar() {
         .on(
           "postgres_changes",
           {
-            event: "UPDATE",
-            schema: "public",
-            table: "announcements",
+            event:"UPDATE",
+            schema:"public",
+            table:"announcements",
           },
-          (payload) => {
+
+          (payload)=>{
 
 
-            if (
-              payload.new?.message
-            ) {
+            if(payload.new?.message){
 
               setMessage(
                 payload.new.message
@@ -75,13 +89,15 @@ function AnnouncementBar() {
 
             }
 
+
           }
+
         )
         .subscribe();
 
 
 
-    return () => {
+    return ()=>{
 
       supabase.removeChannel(
         channel
@@ -91,6 +107,16 @@ function AnnouncementBar() {
 
 
   }, []);
+
+
+
+
+  if(loading || !message){
+
+    return null;
+
+  }
+
 
 
 
