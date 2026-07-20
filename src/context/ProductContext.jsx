@@ -59,7 +59,15 @@ function transformProduct(product) {
       product.image_url,
 
     images:
-      galleryImages,
+  galleryImages.length > 0
+    ? galleryImages
+    : [
+        {
+          id: product.id,
+          imageUrl: product.image_url,
+          sortOrder: 0,
+        },
+      ],
 
     isNewArrival:
       product.is_new_arrival,
