@@ -400,21 +400,58 @@ export async function getGalleryImages(
 
 export async function saveGalleryImages(
   productId,
-  urls
+  urls,
+  mainImageUrl
 ) {
-  if (urls.length === 0) return;
 
-  const images = urls.map((url, index) => ({
-    product_id: productId,
-    image_url: url,
-    sort_order: index + 1,
-  }));
+  const images = [];
 
-  const { error } = await supabase
+
+  // Always save main image as first image
+  if(mainImageUrl){
+
+    images.push({
+      product_id: productId,
+      image_url: mainImageUrl,
+      sort_order: 0,
+    });
+
+  }
+
+
+  // Save gallery images
+  urls.forEach((url,index)=>{
+
+    images.push({
+
+      product_id: productId,
+
+      image_url:url,
+
+      sort_order:index + 1,
+
+    });
+
+  });
+
+
+
+  if(images.length === 0)
+    return;
+
+
+
+  const {
+    error
+  } = await supabase
     .from("product_images")
     .insert(images);
 
-  if (error) throw error;
+
+
+  if(error)
+    throw error;
+
 }
 export async function deleteProduct(product) {
   // Delete main image

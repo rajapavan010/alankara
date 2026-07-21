@@ -41,6 +41,10 @@ function ProductPage() {
 
   const product = getProductBySlug(slug) || null;
 
+console.log("PRODUCT DATA:", product);
+console.log("PRODUCT IMAGES:", product?.images);
+console.log("SELECTED IMAGE:", selectedImage);
+
   const productGalleryImages = useMemo(() => {
     if (!product) {
       return [];
@@ -78,20 +82,26 @@ function ProductPage() {
 
 useEffect(() => {
 
-  const updateProductState = () => {
-
-    setQuantity(1);
-
-    setSelectedImage(
-      productGalleryImages[0]?.imageUrl || null
-    );
-
-  };
+  if (!productGalleryImages.length) {
+    setSelectedImage(null);
+    return;
+  }
 
 
-  updateProductState();
+  setQuantity(1);
 
-}, [product?.id, productGalleryImages]);
+  setSelectedImage(
+    productGalleryImages[0].imageUrl
+  );
+
+
+}, [product?.id]);
+
+console.log(
+  "SELECTED IMAGE:",
+  selectedImage
+);
+
 
   if (productsLoading) {
     return (

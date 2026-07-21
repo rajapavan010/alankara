@@ -172,9 +172,10 @@ async function handleCreate() {
     await createProductDetails(mainImageUrl);
 
   await saveGalleryImages(
-    createdProduct.id,
-    galleryUrls
-  );
+  createdProduct.id,
+  galleryUrls,
+  mainImageUrl
+);
 
   toast.success("Product added successfully!");
 }

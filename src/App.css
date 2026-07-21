@@ -10924,3 +10924,17 @@ a.cart-checkout-button:active {
 .empty-products-btn:hover {
   background: #8e5844;
 }
+
+.product-detail-image-area {
+  min-height: 500px !important;
+}
+
+.product-detail-image {
+  min-height: 500px !important;
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:contain !important;
+  opacity:1 !important;
+  visibility:visible !important;
+}

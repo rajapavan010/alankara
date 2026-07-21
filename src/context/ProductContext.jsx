@@ -24,8 +24,10 @@ function transformProduct(product) {
     .map((productImage) => ({
       id: productImage.id,
       imageUrl: productImage.image_url,
+      image_url: productImage.image_url,
+      url: productImage.image_url,
       sortOrder: productImage.sort_order,
-    }));
+}));
 
 
   return {
