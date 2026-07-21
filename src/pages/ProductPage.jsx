@@ -47,21 +47,34 @@ console.log("SELECTED IMAGE:", selectedImage);
 
   const productGalleryImages = useMemo(() => {
 
-  if (!product) {
-    return [];
+  if (!product) return [];
+
+  const images = [];
+
+  // Always add the main image first
+  if (product.image) {
+    images.push({
+      id: `main-${product.id}`,
+      imageUrl: product.image,
+      sortOrder: 0,
+    });
   }
 
+  // Then add gallery images
+  (product.images || []).forEach((image) => {
 
-  return (product.images || [])
-    .filter(
-      (image) => image.imageUrl
-    )
-    .map((image) => ({
-      id: image.id,
-      imageUrl: image.imageUrl,
-      sortOrder: image.sortOrder,
-    }));
+    // Avoid duplicate main image
+    if (image.imageUrl !== product.image) {
+      images.push({
+        id: image.id,
+        imageUrl: image.imageUrl,
+        sortOrder: image.sortOrder,
+      });
+    }
 
+  });
+
+  return images;
 
 }, [product]);
 
