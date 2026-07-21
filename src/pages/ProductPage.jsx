@@ -46,39 +46,24 @@ console.log("PRODUCT IMAGES:", product?.images);
 console.log("SELECTED IMAGE:", selectedImage);
 
   const productGalleryImages = useMemo(() => {
-    if (!product) {
-      return [];
-    }
 
-    const galleryImages = (product.images || [])
-      .filter(
-        (galleryImage) => galleryImage.imageUrl
-      )
-      .map((galleryImage) => ({
-        id: `gallery-${galleryImage.id}`,
-        imageUrl: galleryImage.imageUrl,
-        sortOrder: galleryImage.sortOrder,
-      }));
+  if (!product) {
+    return [];
+  }
 
-    const allImages = product.image
-      ? [
-          {
-            id: `cover-${product.id}`,
-            imageUrl: product.image,
-            sortOrder: 0,
-          },
-          ...galleryImages,
-        ]
-      : galleryImages;
 
-    return allImages.filter(
-      (image, imageIndex, images) =>
-        images.findIndex(
-          (currentImage) =>
-            currentImage.imageUrl === image.imageUrl
-        ) === imageIndex
-    );
-  }, [product]);
+  return (product.images || [])
+    .filter(
+      (image) => image.imageUrl
+    )
+    .map((image) => ({
+      id: image.id,
+      imageUrl: image.imageUrl,
+      sortOrder: image.sortOrder,
+    }));
+
+
+}, [product]);
 
 useEffect(() => {
 
@@ -90,12 +75,16 @@ useEffect(() => {
 
   setQuantity(1);
 
+
   setSelectedImage(
     productGalleryImages[0].imageUrl
   );
 
 
-}, [product?.id]);
+}, [
+  product?.id,
+  productGalleryImages
+]);
 
 console.log(
   "SELECTED IMAGE:",
