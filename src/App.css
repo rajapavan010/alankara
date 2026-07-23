@@ -10914,6 +10914,19 @@ a.cart-checkout-button:active {
   margin-bottom: 35px;
 }
 
+.empty-products-btn {
+  background: #a96f58;
+  color: #ffffff;
+  border: none;
+  padding: 14px 34px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
 .empty-products-btn:hover {
   background: #8e5844;
 }
